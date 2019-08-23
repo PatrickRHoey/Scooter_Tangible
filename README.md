@@ -13,9 +13,9 @@ Still under development
 
 <H2>Diagrams</H2>
 
-![alt text](https://github.com/PatrickRHoey/Scooter_Tangible/blob/master/tangibleSchematic1.0.pdf "schematic")
+![alt text](./tangibleSchematic1.0.pdf "schematic")
 
 
-![alt text](https://github.com/PatrickRHoey/Scooter_Tangible/blob/master/ArduinoFunctionality.pdf "schematic")
+![alt text](./ArduinoFunctionality.pdf "schematic")
 
 
