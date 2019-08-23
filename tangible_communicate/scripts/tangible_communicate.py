@@ -1,14 +1,14 @@
 #!usr/bin/env python
 
 import rospy
-from tangible_master.msg import button_leds
 import state_control
+from tangible_master.msg import button_leds
 
-recieved_msg = []
+recieved_msg = button_leds()
 
 def callback(data):
     #Sets current button status to the one being published by the arduino
-    recieved_msg = data
+    recieved_msg.button = data
 
 def talker():
     """
@@ -33,9 +33,9 @@ def talker():
     while not rospy.is_shutdown():
         #TODO figure out what i named the serial pub and subscribe here
         #Sets current state according to the array the buttons are publishing
-        set_state(state, recieved_msg)
+        state_control.set_state(state, recieved_msg.button)
         #Compares state to required Led pattern and sets msg in accordance
-        compare_state(state, msg)
+        state_control.compare_state(state, msg)
 
 
         rospy.loginfo(msg)

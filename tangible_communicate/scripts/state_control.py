@@ -10,7 +10,14 @@ def set_state(state_name, recieved_msg):
     """
     if(state_name == "driving"):
         if(recieved_msg.button == [0, 0, 1, 0, 0, 0]):
-            state_name = "pick"
+            state_name = "gather_pick_cloud"
+        else:
+            pass
+
+    #TODO add is pointcloud gathered flag
+    if(state_name == "gather_pick_cloud"):
+        if(pick_cloud_gathered):
+            state_name == "pick"
         else:
             pass
 
@@ -30,6 +37,7 @@ def set_state(state_name, recieved_msg):
         else:
             pass
 
+    #Not sure how this is working with the grasp sucess detection code
     if(state_name == "confirm_pick"):
         if(recieved_msg == [1, 0, 0, 0, 0, 0]):
             state_name = "object_held"
@@ -42,7 +50,7 @@ def set_state(state_name, recieved_msg):
         if(recieved_msg == [0, 0, 0, 0, 0, 1]):
             state_name = "driving"
         elif(recieved_msg == [0, 0, 0, 1, 0, 0]):
-            state_name = "place"
+            state_name = "gather_place_cloud"
         elif(recieved_msg == [0, 0, 0, 0, 1, 0]):
             state_name = "basket"
         else:
@@ -50,13 +58,19 @@ def set_state(state_name, recieved_msg):
 
     #TODO Need complete flag
     if(state_name == "basket"):
-        if(complete):
-            state_name = "drive"
+        if(basket_complete):
+            state_name = "driving"
         else:
             pass
     #TODO need cloudReady flag
+    if(state_name == "gather_place_cloud"):
+        if(place_cloud_gathered):
+            state_name = "place"
+        else:
+            pass
+
     if(state_name == "place"):
-        if(cloud_ready and recieved_msg == [1, 0, 0, 0, 0, 0]):
+        if(recieved_msg == [1, 0, 0, 0, 0, 0]):
             state_name = "place_confirm"
         else:
             pass
@@ -70,7 +84,7 @@ def set_state(state_name, recieved_msg):
             pass
 
     #TODO Need placed confirm flag
-    if(state_name == "placing" and placed):
+    if(state_name == "placing" and placed_complete):
         state_name = "driving"
 
 
@@ -81,22 +95,56 @@ def compare_state(state_name, button_msg):
     """
     Compares current state to desired LED state for the interface
     """
-
+    #1 means solid light on, 2 means that it should be blinking, 0 is off
+    #first led is thinking, second is ready for selection
     if(state_name == "driving"):
-        pass
+        button_msg.button = [0, 0, 2, 0, 0, 1]
+        button_msg.leds = [0, 0]
+
+    elif(state_name == "gather_pick_cloud"):
+        button_msg.button = [0, 0, 1, 0, 0, 0]
+        button_msg.leds = [1, 0]
+
     elif(state_name == "pick"):
-        pass
+        button_msg.button = [2, 2, 1, 0, 0, 0]
+        button_msg.leds = [0, 1]
+
     elif(state_name == "confirm_object"):
-        pass
+        button_msg.button = [2, 2, 1, 0, 0, 0]
+        button_msg.leds = [0, 0]
+
     elif(state_name == "confirm_pick"):
-        pass
+        button_msg.button = [2, 2, 0, 0, 0, 0]
+        button_msg.leds = [0, 0]
+
+
     elif(state_name == "object_held"):
-        pass
+        button_msg.button = [0, 0, 0, 2, 2, 1]
+        button_msg.leds = [0, 0]
+
+
+    elif(state_name == "gather_place_cloud"):
+        button_msg.button = [0, 0, 0, 1, 0, 0]
+        button_msg.leds = [1, 0]
+
+
     elif(state_name == "place"):
-        pass
+        button_msg.button = [2, 2, 0, 1, 0, 0]
+        button_msg.leds = [0, 1]
+
+
     elif(state_name == "place_confirm"):
-        pass
+        button_msg.button = [2, 2, 0, 1, 0, 0]
+        button_msg.leds = [0, 0]
+
+
     elif(state_name == "basket"):
-        pass
+        button_msg.button = [0, 0, 0, 0, 1, 0]
+        button_msg.leds = [0, 0]
+
+
     elif(state_name == "placing"):
-        pass
+        button_msg.button = [1, 0, 0, 1, 0, 0]
+        button_msg.leds = [0, 0]
+
+
