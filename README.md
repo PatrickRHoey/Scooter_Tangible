@@ -12,5 +12,8 @@ Communication is done via a ROS Joy message.
 Still under development
 
 <H2>Diagrams</H2>
+
 ![alt text](tangibleSchematic1.0.pdf "schematic")
+
+
 ![alt text](ArduinoFunctionality.pdf "schematic")
