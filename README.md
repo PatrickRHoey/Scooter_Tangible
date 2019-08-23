@@ -16,6 +16,6 @@ Still under development
 ![alt text](https://github.com/PatrickRHoey/Scooter_Tangible/blob/master/tangibleSchematic1.0.pdf "schematic")
 
 
-![alt text](https://github.com/PatrickRHoey/Scooter_Tangible/blob/master/tangibleSchematic1.0.pdf "schematic")
+![alt text](https://github.com/PatrickRHoey/Scooter_Tangible/blob/master/ArduinoFunctionality.pdf "schematic")
 
 
