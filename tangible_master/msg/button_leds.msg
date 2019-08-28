@@ -1,2 +1,2 @@
-int64[] button
-int64[] leds
+int8[6] button
+int8[3] leds

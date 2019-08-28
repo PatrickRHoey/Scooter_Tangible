@@ -8,7 +8,11 @@ recieved_msg = button_leds()
 
 def callback(data):
     #Sets current button status to the one being published by the arduino
-    recieved_msg.button = data
+    #recieved_msg.button = data.button
+    #recieved_msg.leds = data.leds
+    global recieved_msg
+    recieved_msg = data
+
 
 def talker():
     """
@@ -17,13 +21,13 @@ def talker():
     """
 
     rospy.init_node('tangible_talker', anonymous=True)
-    rate = rospy.Rate(10)   #10 hz
+    rate = rospy.Rate(100)   #10 hz
 
     #Pub
     pub = rospy.Publisher('button_leds', button_leds, queue_size=10)
 
     #Sub
-    rospy.Subscriber("tangible_buttons", button_leds, callback)
+    rospy.Subscriber("tangible_interface_send", button_leds, callback)
 
     msg = button_leds()
     msg.button = [0, 0, 0, 0, 0, 0]
@@ -33,14 +37,17 @@ def talker():
     while not rospy.is_shutdown():
         #TODO figure out what i named the serial pub and subscribe here
         #Sets current state according to the array the buttons are publishing
-        state_control.set_state(state, recieved_msg.button)
+        state = state_control.set_state(state, recieved_msg)
         #Compares state to required Led pattern and sets msg in accordance
-        state_control.compare_state(state, msg)
+        msg = state_control.compare_state(state, msg)
 
+        print("tangible state name is " + state + '\n')
+        print("tangible send message is " + str(msg) + '\n')
 
-        rospy.loginfo(msg)
+        #rospy.loginfo(msg)
         pub.publish(msg)
-        rate.sleep
+        #rate.sleep
+        rospy.sleep(1)
 
 
 if __name__ == "__main__":
