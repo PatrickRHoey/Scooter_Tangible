@@ -3,10 +3,12 @@
 import rospy
 from tangible_master.msg import button_leds
 
-def set_state(state_name, recieved_msg):
+def set_state(state_name, recieved_msg, pick_cloud_gathered, basket_complete, place_cloud_gathered, placed_complete):
     """
     Handles the state of the tangible user interface based upon the input recieved via the buttons and current system
     status
+    buttons go in this order [yes, no, pick, place, basket, drive]
+    leds go in this order [thinking, wait for input, wrist lasers]
     """
     if(state_name == "driving"):
         if(recieved_msg.button == [0, 0, 1, 0, 0, 0]):
@@ -99,52 +101,52 @@ def compare_state(state_name, button_msg):
     #first led is thinking, second is ready for selection
     if(state_name == "driving"):
         button_msg.button = [0, 0, 2, 0, 0, 1]
-        button_msg.leds = [0, 0]
+        button_msg.leds = [0, 0, 0]
 
     elif(state_name == "gather_pick_cloud"):
         button_msg.button = [0, 0, 1, 0, 0, 0]
-        button_msg.leds = [1, 0]
+        button_msg.leds = [1, 0, 0]
 
     elif(state_name == "pick"):
         button_msg.button = [2, 2, 1, 0, 0, 0]
-        button_msg.leds = [0, 1]
+        button_msg.leds = [0, 1, 1]
 
     elif(state_name == "confirm_object"):
         button_msg.button = [2, 2, 1, 0, 0, 0]
-        button_msg.leds = [0, 0]
+        button_msg.leds = [0, 0, 0]
 
     elif(state_name == "confirm_pick"):
         button_msg.button = [2, 2, 0, 0, 0, 0]
-        button_msg.leds = [0, 0]
+        button_msg.leds = [0, 0, 0]
 
 
     elif(state_name == "object_held"):
         button_msg.button = [0, 0, 0, 2, 2, 1]
-        button_msg.leds = [0, 0]
+        button_msg.leds = [0, 0, 0]
 
 
     elif(state_name == "gather_place_cloud"):
         button_msg.button = [0, 0, 0, 1, 0, 0]
-        button_msg.leds = [1, 0]
+        button_msg.leds = [1, 0, 0]
 
 
     elif(state_name == "place"):
         button_msg.button = [2, 2, 0, 1, 0, 0]
-        button_msg.leds = [0, 1]
+        button_msg.leds = [0, 1, 1]
 
 
     elif(state_name == "place_confirm"):
         button_msg.button = [2, 2, 0, 1, 0, 0]
-        button_msg.leds = [0, 0]
+        button_msg.leds = [0, 0, 0]
 
 
     elif(state_name == "basket"):
         button_msg.button = [0, 0, 0, 0, 1, 0]
-        button_msg.leds = [0, 0]
+        button_msg.leds = [0, 0, 0]
 
 
     elif(state_name == "placing"):
         button_msg.button = [1, 0, 0, 1, 0, 0]
-        button_msg.leds = [0, 0]
+        button_msg.leds = [0, 0, 1]
 
 

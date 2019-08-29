@@ -16,4 +16,4 @@ Still under development
 ![alt text](tangibleSchematic1.0.pdf "schematic")
 
 
-![alt text](ArduinoFunctionality.pdf "schematic")
+![alt text](ArduinoFunctionality.jpg  vie "schematic")
