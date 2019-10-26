@@ -86,7 +86,7 @@ def set_state(state_name, recieved_msg):
 
 
 
-def compare_state(state_name, button_msg):
+def compare_state(state_name, button_msg, scooter_instance):
     """
     Compares current state to desired LED state for the interface
     """
